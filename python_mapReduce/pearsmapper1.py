@@ -16,7 +16,7 @@ class VariablePairsMapper(object):
 
         def map(self):
 		for row in self:
-			self.emit(row[0], row[4] + SEP + row[10])
+			self.emit(row[0], row[4] + self.sep + row[10])
 
 	def __iter__(self):
 		reader = csv.reader(self.stream)

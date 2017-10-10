@@ -4,7 +4,7 @@ import sys
 from itertools import groupby
 from operator import itemgetter
 
-sep = ","
+SEP = ","
 
 class pearsReducer(object):
 
@@ -15,31 +15,35 @@ class pearsReducer(object):
 	def emit(self, key, value):
 		sys.stdout.write("{}{}{}\n".format(key,self.sep,value))
 
-	
-	def reduce(self):
-		sn, seth, sbtc = 0
-		for key, eth, btc in self:
-			sn = sn+1
-			seth = seth+eth
-			sbtc = sbtc+btc
-
-		meth = seth/sn
-		mbtc = sbtc/sn
-
-		for key, eth, btc in self:
-			self.emit(key, (str(eth)+sel.sep+str(btc)+self.sep+str(meth)+self.sep+str(mbtc))
-
 	def __iter__(self):
 		for line in self.stream:
-		#reader = csv.reader(self.stream)
-		#for line in reader:
 			try:
 				parts = line.split(self.sep)
 				yield parts[0],float(parts[1]),float(parts[2])
-			except:	
+			except:
 				continue	
 
+	def reduce(self):
+		
+		sn = 0
+		seth = 0
+		sbtc = 0
+		values = list();
+		for key, eth, btc in self:
+			values.append((key,eth,btc))
 
-if __name__ =='__main__':
+		for key,eth,btc in values:		
+			sn= sn +1
+			seth = seth+ eth
+			sbtc = sbtc + btc	
+			
+		meth = seth/sn
+		mbtc = sbtc/sn
+
+		for key, eth, btc in values:
+			self.emit(key, (str(eth)+self.sep+str(btc)+self.sep+str(meth)+self.sep+str(mbtc)))
+
+
+if __name__ == '__main__':
 	reducer = pearsReducer(sys.stdin);
 	reducer.reduce()
