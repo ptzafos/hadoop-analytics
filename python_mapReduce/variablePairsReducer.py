@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
 import sys
-from itertools import groupby
-from operator import itemgetter
 
 SEP = ","
 
@@ -19,7 +17,7 @@ class pearsReducer(object):
 		for line in self.stream:
 			try:
 				parts = line.split(self.sep)
-				yield parts[0],float(parts[1]),float(parts[2])
+				yield parts[0],(float(parts[1]),float(parts[2]))
 			except:
 				continue	
 
@@ -29,7 +27,7 @@ class pearsReducer(object):
 		seth = 0
 		sbtc = 0
 		values = list();
-		for key, eth, btc in self:
+		for key, (eth, btc) in self:
 			values.append((key,eth,btc))
 
 		for key,eth,btc in values:		
