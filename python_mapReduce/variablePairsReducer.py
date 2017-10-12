@@ -4,7 +4,7 @@ import sys
 
 SEP = ","
 
-class pearsReducer(object):
+class variablePairsReducer(object):
 
 	def __init__(self, stream, sep = SEP):
 		self.stream = stream
@@ -43,5 +43,5 @@ class pearsReducer(object):
 
 
 if __name__ == '__main__':
-	reducer = pearsReducer(sys.stdin);
+	reducer = variablePairsReducer(sys.stdin);
 	reducer.reduce()
